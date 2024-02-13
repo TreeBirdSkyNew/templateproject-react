@@ -1,10 +1,11 @@
 import React from 'react';
-import  { TemplateProjectService } from "../Services/TemplateProjectService";
+import  { TemplateTechniqueService } from "../Services/TemplateTechniqueService";
 import  { useState } from 'react';
 
 const TemplateTechniqueCreate = () => {
 
     const techniqueDefault = {
+        templateProjectId:0,
         templateTechniqueName: '',
         templateTechniqueTitle: '',
         templateTechniqueDescription: '',
@@ -41,6 +42,7 @@ const TemplateTechniqueCreate = () => {
 
     const SaveTemplateTechnique = (event) => {
         var createTechnique = {
+            templateProjectId:1,
             templateTechniqueName: techniqueName,
             templateTechniqueTitle: techniqueTitle,
             templateTechniqueDescription: techniqueDescription,
@@ -49,7 +51,7 @@ const TemplateTechniqueCreate = () => {
         }
         setTechnique(createTechnique);
         debugger;
-        TemplateProjectService.createTemplateProject(technique);
+        TemplateTechniqueService.createTemplateTechnique(technique);
     }
 
     const Cancel = (event) => {

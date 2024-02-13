@@ -10,13 +10,13 @@ export const TemplateTechniqueService = {
         return response.json();
     },
 
-    createTemplateTechnique: async (template) => {
-        const response = await fetch('https://localhost:7132/api/TemplateTechnique/Create', {
+    createTemplateTechnique: async (templateTechniqueVMForCreation) => {
+        const response = await fetch('https://localhost:7132/api/TemplateTechnique/CreateTechnique', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(template),
+            body: JSON.stringify(templateTechniqueVMForCreation),
           });
           if (!response.ok) {
             throw new Error('Failed to send data');
@@ -47,7 +47,7 @@ export const TemplateTechniqueService = {
     },
 
     DeleteTemplateTechnique: async (id) => {
-      const response = await fetch('https://localhost:7132/api/TemplateTechnique/Delete/'+id, {
+      const response = await fetch('https://localhost:7132/api/TemplateTechnique/DeleteTechnique/'+id, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

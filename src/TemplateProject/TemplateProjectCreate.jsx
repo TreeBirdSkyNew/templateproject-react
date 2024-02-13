@@ -48,8 +48,8 @@ const TemplateProjectCreate = () => {
             templateProjectVersionNet: projectVersionNet,
         }
         setProject(createProject);
-        debugger;
-        TemplateProjectService.createTemplateProject(project);
+        console.log(createProject.templateProjectName);
+        TemplateProjectService.createTemplateProject(createProject);
     }
 
     const Cancel = (event) => {

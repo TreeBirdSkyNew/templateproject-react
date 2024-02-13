@@ -1,7 +1,7 @@
 import React from 'react';
 import  { useState , useEffect} from 'react';
 import {TemplateProjectService} from "../Services/TemplateProjectService";
-import {TemplateTinyMCEditor} from "./TemplateTinyMCEditor";
+import {TemplateTinyMCEditor} from "./../Components/TemplateTinyMCEditor";
 import { useParams } from 'react-router-dom';
 
 const TemplateProjectDetails = () => {

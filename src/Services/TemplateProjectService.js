@@ -10,13 +10,13 @@ export const TemplateProjectService = {
         return response.json();
     },
 
-    createTemplateProject: async (template) => {
+    createTemplateProject: async (templateProjectVMForCreation) => {
         const response = await fetch('https://localhost:7265/api/TemplateProject/Create', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(template),
+            body: JSON.stringify(templateProjectVMForCreation),
           });
           if (!response.ok) {
             throw new Error('Failed to send data');
@@ -32,7 +32,7 @@ export const TemplateProjectService = {
         return response.json();
     },
 
-    updateTemplateProject: async (template, id) => {
+    updateTemplateProject: async (id,template) => {
         const response = await fetch('https://localhost:7265/api/TemplateProject/Edit/'+id, {
             method: 'PUT',
             headers: {

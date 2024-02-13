@@ -29,7 +29,7 @@ const TemplateProjectList = () => {
             console.log(error);
         })
         .finally(() => {
-            return null;
+            window.location.href = '../TemplateProject';
         })
     }
 

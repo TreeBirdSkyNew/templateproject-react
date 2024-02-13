@@ -6,13 +6,13 @@ import { useParams } from 'react-router-dom';
 const TemplateProjectUpdate = () => {    
 
     const { id } = useParams();
-    const [project,setProject] = useState();    
+    const [projectId,setProjectId] = useState(); 
     const [projectName,setProjectName] = useState('');  
     const [projectTitle,setProjectTitle] = useState(''); 
     const [projectDescription,setProjectDescription] = useState(''); 
     const [projectVersion,setProjectVersion] = useState(''); 
     const [projectVersionNet,setProjectVersionNet] = useState(''); 
-    
+
     useEffect(() => {
         refreshList(id);
     },[id]);
@@ -20,12 +20,13 @@ const TemplateProjectUpdate = () => {
     const refreshList = async (templateProjectId) => {
         TemplateProjectService.getTemplateProjectById(templateProjectId)
             .then((response) => {
-                setProject(response.data);
-                setProjectName(project.templateProjectName);
-                setProjectTitle(project.templateProjectTitle);
-                setProjectVersion(project.templateProjectVersion);
-                setProjectVersionNet(project.templateProjectVersionNet);
-                setProjectDescription(project.templateProjectDescription);
+                console.log('getTemplateProjectById');
+                setProjectId(response.templateProjectId);
+                setProjectName(response.templateProjectName);
+                setProjectTitle(response.templateProjectTitle);
+                setProjectDescription(response.templateProjectDescription);
+                setProjectVersion(response.templateProjectVersion);
+                setProjectVersionNet(response.templateProjectVersionNet);
             })
             .catch((error) => {
                 console.log(error);
@@ -33,31 +34,32 @@ const TemplateProjectUpdate = () => {
             .finally(() => {
                 return null;
             })
-    };
+    };    
 
     const changeTemplateProjectNameHandler = (event) => {
         setProjectName(event.target.value);
-    }
+    };
 
     const changeTemplateProjectTitleHandler = (event) => {
         setProjectTitle(event.target.value);
-    }
+    };
 
     const changeTemplateProjectDescriptionHandler = (event) => {
         setProjectDescription(event.target.value);
-    }
+    };
 
     const changeTemplateProjectVersionHandler = (event) => {
         setProjectVersion(event.target.value);
-    }
+    };
 
     const changeTemplateProjectVersionNetHandler = (event) => {
         setProjectVersionNet(event.target.value);
-    }
+    };
 
     const SaveTemplateProject = (event) => {
         event.preventDefault();
         let project = {
+            templateProjectId: projectId, 
             templateProjectName: projectName, 
             templateProjectTitle: projectTitle, 
             templateProjectDescription: projectDescription,
@@ -65,10 +67,21 @@ const TemplateProjectUpdate = () => {
             templateProjectVersionNet: projectVersionNet,
         };
         console.log('templateProject => ' + JSON.stringify(project));
-        TemplateProjectService.updateTemplateProject(project,4)
-        .then(res =>{  });
-        window.location.href = '../TemplateProject';
-    }
+        TemplateProjectService.updateTemplateProject(id,project)
+        .then((response) => {
+            setProjectName(response.templateProjectName);
+            setProjectTitle(response.templateProjectTitle);
+            setProjectDescription(response.templateProjectDescription);
+            setProjectVersion(response.templateProjectVersion);
+            setProjectVersionNet(response.templateProjectVersionNet);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+        .finally(() => {
+            window.location.href = '../TemplateProject';
+        })
+    };
 
     return(
     <div className = "container">
