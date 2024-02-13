@@ -1,6 +1,5 @@
 import React from 'react';
 import  { TemplateProjectService } from "../Services/TemplateProjectService";
-import  { templateProject } from"../types/templateProject";
 import  { useState } from 'react';
 
 const TemplateProjectCreate = () => {
@@ -13,12 +12,12 @@ const TemplateProjectCreate = () => {
         templateProjectVersionNet: '',
     }
 
-    const [project,setProject] = useState<templateProject>(projectDefault);    
-    const [projectName,setProjectName] = useState<string>('');  
-    const [projectTitle,setProjectTitle] = useState<string>(''); 
-    const [projectDescription,setDescription] = useState<string>(''); 
-    const [projectVersion,setVersion] = useState<string>(''); 
-    const [projectVersionNet,setVersionNet] = useState<string>(''); 
+    const [project,setProject] = useState(projectDefault);    
+    const [projectName,setProjectName] = useState('');  
+    const [projectTitle,setProjectTitle] = useState(''); 
+    const [projectDescription,setDescription] = useState(''); 
+    const [projectVersion,setVersion] = useState(''); 
+    const [projectVersionNet,setVersionNet] = useState(''); 
 
     const ChangeProjectNameHandler = (event) => {
         setProjectName(event.target.value);
@@ -41,7 +40,7 @@ const TemplateProjectCreate = () => {
     }
 
     const SaveTemplateProject = (event) => {
-        var createProject : templateProject = {
+        var createProject = {
             templateProjectName: projectName,
             templateProjectTitle: projectTitle,
             templateProjectDescription: projectDescription,
@@ -49,6 +48,7 @@ const TemplateProjectCreate = () => {
             templateProjectVersionNet: projectVersionNet,
         }
         setProject(createProject);
+        debugger;
         TemplateProjectService.createTemplateProject(project);
     }
 

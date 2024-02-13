@@ -1,22 +1,23 @@
 import React from 'react';
 import {TemplateProjectService} from "../Services/TemplateProjectService";
 import  { useState , useEffect} from 'react';
-import { templateProject } from '../types/templateProject';
+import { useParams } from 'react-router-dom';
 
 const TemplateProjectUpdate = () => {    
 
-    const [project,setProject] = useState<templateProject>(projectDefault);    
-    const [projectName,setProjectName] = useState<string>('');  
-    const [projectTitle,setProjectTitle] = useState<string>(''); 
-    const [projectDescription,setProjectDescription] = useState<string>(''); 
-    const [projectVersion,setProjectVersion] = useState<string>(''); 
-    const [projectVersionNet,setProjectVersionNet] = useState<string>(''); 
+    const { id } = useParams();
+    const [project,setProject] = useState();    
+    const [projectName,setProjectName] = useState('');  
+    const [projectTitle,setProjectTitle] = useState(''); 
+    const [projectDescription,setProjectDescription] = useState(''); 
+    const [projectVersion,setProjectVersion] = useState(''); 
+    const [projectVersionNet,setProjectVersionNet] = useState(''); 
     
     useEffect(() => {
-        refreshList(5);
-    },[]);
+        refreshList(id);
+    },[id]);
 
-    const refreshList = async (templateProjectId: number) => {
+    const refreshList = async (templateProjectId) => {
         TemplateProjectService.getTemplateProjectById(templateProjectId)
             .then((response) => {
                 setProject(response.data);

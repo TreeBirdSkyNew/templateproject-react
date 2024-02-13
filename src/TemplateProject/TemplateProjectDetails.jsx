@@ -2,20 +2,21 @@ import React from 'react';
 import  { useState , useEffect} from 'react';
 import {TemplateProjectService} from "../Services/TemplateProjectService";
 import {TemplateTinyMCEditor} from "./TemplateTinyMCEditor";
-import { templateProject } from '../types/templateProject';
+import { useParams } from 'react-router-dom';
 
 const TemplateProjectDetails = () => {
 
-    const [templateProject,setTemplateProject] = useState<templateProject>();
+    const { id } = useParams();
+    const [templateProject,setTemplateProject] = useState(null);
     
     useEffect(() => {
-        refreshList(5);
-    },[]);
+        refreshList(id);
+    },[id]);
 
-    const refreshList = async (templateProjectId: number) => {
+    const refreshList = async (templateProjectId) => {
         TemplateProjectService.getTemplateProjectById(templateProjectId)
             .then((response) => {
-                setTemplateProject(response.data);
+                setTemplateProject(response);
             })
             .catch((error) => {
                 console.log(error);
