@@ -4,15 +4,6 @@ import  { useState } from 'react';
 
 const TemplateProjectCreate = () => {
 
-    const projectDefault = {
-        templateProjectName: '',
-        templateProjectTitle: '',
-        templateProjectDescription: '',
-        templateProjectVersion: '',
-        templateProjectVersionNet: '',
-    }
-
-    const [project,setProject] = useState(projectDefault);    
     const [projectName,setProjectName] = useState('');  
     const [projectTitle,setProjectTitle] = useState(''); 
     const [projectDescription,setDescription] = useState(''); 
@@ -47,7 +38,6 @@ const TemplateProjectCreate = () => {
             templateProjectVersion: projectVersion,
             templateProjectVersionNet: projectVersionNet,
         }
-        setProject(createProject);
         console.log(createProject.templateProjectName);
         TemplateProjectService.createTemplateProject(createProject);
     }

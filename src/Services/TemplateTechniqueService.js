@@ -10,6 +10,14 @@ export const TemplateTechniqueService = {
         return response.json();
     },
 
+    getAllTemplateTechniqueByProjectId: async (id) => {
+        const response = await fetch('https://localhost:7132/api/TemplateTechnique/ProjectAllTechniques/'+id);
+        if (!response.ok) {
+            throw new Error('Failed to fetch data');
+        }
+        return response.json();
+  },
+
     createTemplateTechnique: async (templateTechniqueVMForCreation) => {
         const response = await fetch('https://localhost:7132/api/TemplateTechnique/CreateTechnique', {
             method: 'POST',
@@ -32,13 +40,13 @@ export const TemplateTechniqueService = {
         return response.json();
     },
 
-    updateTemplateTechnique: async (template, id) => {
-        const response = await fetch('https://localhost:7132/api/TemplateTechnique/Edit/'+id, {
+    updateTemplateTechnique: async (templateTechniqueVMForUpdate, id) => {
+        const response = await fetch('https://localhost:7132/api/TemplateTechnique/EditTechnique/'+id, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(template),
+            body: JSON.stringify(templateTechniqueVMForUpdate),
           });
           if (!response.ok) {
             throw new Error('Failed to update data');

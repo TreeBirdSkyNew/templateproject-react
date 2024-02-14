@@ -4,16 +4,6 @@ import  { useState } from 'react';
 
 const TemplateTechniqueCreate = () => {
 
-    const techniqueDefault = {
-        templateProjectId:0,
-        templateTechniqueName: '',
-        templateTechniqueTitle: '',
-        templateTechniqueDescription: '',
-        templateTechniqueVersion: '',
-        templateTechniqueVersionNet: '',
-    }
-
-    const [technique,setTechnique] = useState(techniqueDefault);    
     const [techniqueName,setTechniqueName] = useState('');  
     const [techniqueTitle,setTechniqueTitle] = useState(''); 
     const [techniqueDescription,setTechniqueDescription] = useState(''); 
@@ -49,9 +39,15 @@ const TemplateTechniqueCreate = () => {
             templateTechniqueVersion: techniqueVersion,
             templateTechniqueVersionNet: techniqueVersionNet,
         }
-        setTechnique(createTechnique);
-        debugger;
-        TemplateTechniqueService.createTemplateTechnique(technique);
+        TemplateTechniqueService.createTemplateTechnique(createTechnique)
+        .then((response) => {
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+        .finally(() => {
+            window.location.href = '../TemplateProject';
+        })
     }
 
     const Cancel = (event) => {

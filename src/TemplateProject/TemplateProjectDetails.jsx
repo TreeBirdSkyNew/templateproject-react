@@ -1,8 +1,8 @@
 import React from 'react';
 import  { useState , useEffect} from 'react';
 import {TemplateProjectService} from "../Services/TemplateProjectService";
-import {TemplateTinyMCEditor} from "./../Components/TemplateTinyMCEditor";
 import { useParams } from 'react-router-dom';
+
 
 const TemplateProjectDetails = () => {
 
@@ -70,13 +70,10 @@ const TemplateProjectDetails = () => {
                     <div className="col-md-3">
                     <strong>templateProjectDescription:</strong>
                     </div>
-                    <input placeholder="templateProjectDescription" 
+                    <textarea placeholder="templateProjectDescription" 
                            name="templateProjectDescription" 
                            className="form-control" 
                            value={templateProject?.templateProjectDescription} />
-                </div>
-                <div>
-                    <TemplateTinyMCEditor></TemplateTinyMCEditor>
                 </div>
             </div>
         </div>

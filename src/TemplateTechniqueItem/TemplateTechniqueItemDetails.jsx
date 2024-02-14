@@ -1,25 +1,22 @@
 import React from 'react';
 import  { useState , useEffect} from 'react';
-import {TemplateTechniqueService} from "../Services/TemplateTechniqueService";
+import {TemplateTechniqueItemService} from "../Services/TemplateTechniqueItemService";
 import { useParams } from 'react-router-dom';
-import TemplateTechniqueItemList from "./../TemplateTechniqueItem/TemplateTechniqueItemList";
-
 import { Editor } from "@tinymce/tinymce-react"
 
-const TemplateTechniqueDetails = () => {
+const TemplateTechniqueItemDetails = () => {
 
     const { id } = useParams();
-    const [templateTechnique,setTemplateTechnique] = useState(null);
+    const [templateTechniqueItem,setTemplateTechniqueItem] = useState(null);
 
     const [content,setContent] = useState(null);
-    const [description,setDescription] = useState(null);
-    
+    const [description,setDescription] = useState(null);    
 
     useEffect(() => {
-        TemplateTechniqueService.getTemplateTechniqueById(id)
+        TemplateTechniqueItemService.TemplateTechniqueItemDetails(id)
             .then((response) => {
-                setTemplateTechnique(response);
-                setDescription(response.templateTechniqueDescription);
+                setTemplateTechniqueItem(response);
+                setDescription(response.templateTechniqueItemDescription);
             })
             .catch((error) => {
                 console.log(error);
@@ -27,58 +24,56 @@ const TemplateTechniqueDetails = () => {
             .finally(() => {
                 return null;
             })
-    },[id]);
-
-    
+    },[id]);    
 
     return(
         <div>
-            <h3>TemplateTechnique</h3>
+            <h3>TemplateTechniqueItem</h3>
             <div className="card card-body bg-light mb-2 mt-2">
                 <div className="row">
                     <div className="col-md-3">
-                        <strong>templateTechniqueTitle:</strong>
+                        <strong>templateTechniqueItemTitle:</strong>
                     </div>
-                    <input placeholder="templateTechniqueTitle" 
-                           name="templateTechniqueTitle" 
+                    <input placeholder="templateTechniqueItemTitle" 
+                           name="templateTechniqueItemTitle" 
                            className="form-control" 
-                           value={templateTechnique?.templateTechniqueTitle} />
+                           value={templateTechniqueItem?.templateTechniqueItemTitle} />
                 </div>
                 <div className="row">
                     <div className="col-md-3">
-                        <strong>TemplateTechniqueName:</strong>
+                        <strong>TemplateTechniqueItemName:</strong>
                     </div>
-                    <input placeholder="TemplateTechniqueName" 
-                           name="TemplateTechniqueName" 
+                    <input placeholder="TemplateTechniqueItemName" 
+                           name="TemplateTechniqueItemName" 
                            className="form-control" 
-                           value={templateTechnique?.templateTechniqueName} />
+                           value={templateTechniqueItem?.templateTechniqueItemName} />
                 </div>
                 <div className="row">
                     <div className="col-md-3">
-                    <strong>templateTechniqueVersion:</strong>
+                    <strong>templateTechniqueItemVersion:</strong>
                     </div>
-                    <input placeholder="templateTechniqueVersion" 
-                           name="templateTechniqueVersion" 
+                    <input placeholder="templateTechniqueItemVersion" 
+                           name="templateTechniqueItemVersion" 
                            className="form-control" 
-                           value={templateTechnique?.templateTechniqueVersion} />
+                           value={templateTechniqueItem?.templateTechniqueItemVersion} />
                 </div>
                 <div className="row">
                     <div className="col-md-3">
-                    <strong>templateTechniqueVersionNet:</strong>
+                    <strong>templateTechniqueItemVersionNet:</strong>
                     </div>
-                    <input placeholder="templateTechniqueVersionNet" 
-                           name="templateTechniqueVersionNet" 
+                    <input placeholder="templateTechniqueItemVersionNet" 
+                           name="templateTechniqueItemVersionNet" 
                            className="form-control" 
-                           value={templateTechnique?.templateTechniqueVersionNet} />
+                           value={templateTechniqueItem?.templateTechniqueItemVersionNet} />
                 </div>
                 <div className="row">
                     <div className="col-md-3">
-                    <strong>templateTechniqueDescription:</strong>
+                    <strong>templateTechniqueItemDescription:</strong>
                     </div>
-                    <textarea placeholder="templateTechniqueDescription" 
-                           name="templateTechniqueDescription" 
+                    <textarea placeholder="templateTechniqueItemDescription" 
+                           name="templateTechniqueItemDescription" 
                            className="form-control" 
-                           value={templateTechnique?.templateTechniqueDescription} />
+                           value={templateTechniqueItem?.templateTechniqueItemDescription} />
                 </div>
                 <div>
                     <Editor apiKey='hz02awppy81e4p1nxz56msqlursgj5kqic9dj7dvnv9j9di5'
@@ -98,11 +93,8 @@ const TemplateTechniqueDetails = () => {
                 </div>
 
             </div>
-            <div>
-                <TemplateTechniqueItemList templateTechniqueId={id} />
-            </div>
         </div>
     );
 }
 
-export default TemplateTechniqueDetails;
+export default TemplateTechniqueItemDetails;

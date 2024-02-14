@@ -2,30 +2,35 @@ import React from 'react';
 import {TemplateTechniqueService} from "../Services/TemplateTechniqueService";
 import  { useState , useEffect} from 'react';
 import { useParams } from 'react-router-dom';
+import { Editor } from "@tinymce/tinymce-react"
 
 const TemplateTechniqueUpdate = () => {    
 
-    const { id } = useParams();
-    const [technique,setTechnique] = useState();    
-    const [techniqueName,setTechniqueName] = useState('');  
-    const [techniqueTitle,setTechniqueTitle] = useState(''); 
-    const [techniqueDescription,setTechniqueDescription] = useState(''); 
-    const [techniqueVersion,setTechniqueVersion] = useState(''); 
-    const [techniqueVersionNet,setTechniqueVersionNet] = useState(''); 
     
-    useEffect(() => {
-        refreshList(id);
-    },[id]);
+    const { id } = useParams();
+    const [templateTechnique,setTemplateTechnique] = useState(null);
 
-    const refreshList = async (templateTechniqueId) => {
-        TemplateTechniqueService.getTemplateTechniqueById(templateTechniqueId)
+    const [content,setContent] = useState(null);
+    const [description,setDescription] = useState(null);
+
+    const [techniqueId,setTechniqueId] = useState(null);
+    const [projectId,setProjectId] = useState(null);
+    const [techniqueName,setTechniqueName] = useState(null);
+    const [techniqueTitle,setTechniqueTitle] = useState(null);
+    const [techniqueVersion,setTechniqueVersion] = useState(null);
+    const [techniqueVersionNet,setTechniqueVersionNet] = useState(null);
+
+    useEffect(() => {
+        TemplateTechniqueService.getTemplateTechniqueById(id)
             .then((response) => {
-                setTechnique(response.data);
-                setTechniqueName(technique.templateTechniqueName);
-                setTechniqueTitle(technique.templateTechniqueTitle);
-                setTechniqueVersion(technique.templateTechniqueVersion);
-                setTechniqueVersionNet(technique.templateTechniqueVersionNet);
-                setTechniqueDescription(technique.templateTechniqueDescription);
+                setTemplateTechnique(response);
+                setTechniqueId(response.templateTechniqueId);
+                setProjectId(response.templateProjectId);
+                setTechniqueName(response.templateProjectName);
+                setTechniqueTitle(response.templateProjectTitle);
+                setDescription(response.templateTechniqueDescription);
+                setTechniqueVersion(response.templateTechniqueVersion);
+                setTechniqueVersionNet(response.templateTechniqueVersionNet);
             })
             .catch((error) => {
                 console.log(error);
@@ -33,7 +38,8 @@ const TemplateTechniqueUpdate = () => {
             .finally(() => {
                 return null;
             })
-    };
+    },[id]);
+
 
     const changeTemplateTechniqueNameHandler = (event) => {
         setTechniqueName(event.target.value);
@@ -41,10 +47,6 @@ const TemplateTechniqueUpdate = () => {
 
     const changeTemplateTechniqueTitleHandler = (event) => {
         setTechniqueTitle(event.target.value);
-    }
-
-    const changeTemplateTechniqueDescriptionHandler = (event) => {
-        setTechniqueDescription(event.target.value);
     }
 
     const changeTemplateTechniqueVersionHandler = (event) => {
@@ -55,56 +57,94 @@ const TemplateTechniqueUpdate = () => {
         setTechniqueVersionNet(event.target.value);
     }
 
-    const SaveTemplateProject = (event) => {
+    const SaveTemplateTechnique = (event) => {
         event.preventDefault();
         let project = {
+            templateProjectId: projectId, 
+            templateTechniqueId: techniqueId, 
             templateTechniqueName: techniqueName, 
             templateTechniqueTitle: techniqueTitle, 
-            templateTechniqueDescription: techniqueDescription,
+            templateTechniqueDescription: content, 
             templateTechniqueVersion: techniqueVersion,
             templateTechniqueVersionNet: techniqueVersionNet,
         };
-        console.log('templateTechnique => ' + JSON.stringify(project));
-        TemplateTechniqueService.updateTemplateTechnique(project,id)
-        .then(res =>{  });
-        window.location.href = '../TemplateTechnique';
+        TemplateTechniqueService.updateTemplateTechnique(project,techniqueId)
+        .then(res =>{ 
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+        .finally(() => {
+            window.location.href = '../TemplateTechnique';
+        })
     }
 
     return(
-    <div className = "container">
-        <div className = "row">
-            <div className = "card-body">
-                <form>
-                    <div className = "form-group">
-                        <label>TemplateProjectName: </label>
-                        <input placeholder="Name" name="Name" className="form-control" 
-                            value={techniqueName} onChange={changeTemplateTechniqueNameHandler}/>
+        <div>
+            <h3>TemplateTechnique</h3>
+            <form>
+                <div className="card card-body bg-light mb-2 mt-2">
+                    <div className="row">
+                        <div className="col-md-3">
+                            <strong>templateTechniqueTitle:</strong>
+                        </div>
+                        <input placeholder="templateTechniqueTitle" 
+                            name="templateTechniqueTitle" 
+                            className="form-control" 
+                            value={templateTechnique?.templateTechniqueTitle} 
+                            onChange={changeTemplateTechniqueTitleHandler}/>
                     </div>
-                    <div className = "form-group">
-                        <label>TemplateProjectTitle: </label>
-                        <input placeholder="Title" name="Title" className="form-control" 
-                            value={techniqueTitle} onChange={changeTemplateTechniqueTitleHandler}/>
+                    <div className="row">
+                        <div className="col-md-3">
+                            <strong>TemplateTechniqueName:</strong>
+                        </div>
+                        <input placeholder="TemplateTechniqueName" 
+                            name="TemplateTechniqueName" 
+                            className="form-control" 
+                            value={templateTechnique?.templateTechniqueName} 
+                            onChange={changeTemplateTechniqueNameHandler} />
                     </div>
-                    <div className = "form-group">
-                        <label>TemplateProjectDescription: </label>
-                        <input placeholder="Description" name="Description" className="form-control" 
-                            value={techniqueDescription} onChange={changeTemplateTechniqueDescriptionHandler}/>
+                    <div className="row">
+                        <div className="col-md-3">
+                        <strong>templateTechniqueVersion:</strong>
+                        </div>
+                        <input placeholder="templateTechniqueVersion" 
+                            name="templateTechniqueVersion" 
+                            className="form-control" 
+                            value={templateTechnique?.templateTechniqueVersion} 
+                            onChange={changeTemplateTechniqueVersionHandler} />
                     </div>
-                    <div className = "form-group">
-                        <label>TemplateProjectVersion: </label>
-                        <input placeholder="Version" name="Version" className="form-control" 
-                            value={techniqueVersion} onChange={changeTemplateTechniqueVersionHandler}/>
+                    <div className="row">
+                        <div className="col-md-3">
+                        <strong>templateTechniqueVersionNet:</strong>
+                        </div>
+                        <input placeholder="templateTechniqueVersionNet" 
+                            name="templateTechniqueVersionNet" 
+                            className="form-control" 
+                            value={templateTechnique?.templateTechniqueVersionNet} 
+                            onChange={changeTemplateTechniqueVersionNetHandler} />
                     </div>
-                    <div className = "form-group">
-                        <label>TemplateProjectVersionNet: </label>
-                        <input placeholder="VersionNet" name="VersionNet" className="form-control" 
-                            value={techniqueVersionNet} onChange={changeTemplateTechniqueVersionNetHandler}/>
+                    
+                    <div>
+                        <Editor apiKey='hz02awppy81e4p1nxz56msqlursgj5kqic9dj7dvnv9j9di5'
+                            onEditorChange={(newvalue,editor) => {
+                                setDescription(newvalue);
+                                setContent(editor.getContent({format : 'html'}));
+                            }}
+                            onInit={(evt,editor ) => {
+                                setContent(editor.getContent({format : 'html'}));
+                            }}
+                            initialValue=''
+                            value={description}
+                            init={{
+                                
+                            }}
+                        />
                     </div>
-                    <button className="btn btn-success" onClick={SaveTemplateProject}>Save</button>
-                </form>
-            </div>
+                    <button className="btn btn-success" onClick={SaveTemplateTechnique}>Save</button>
+                </div>
+            </form>
         </div>
-    </div>
     );
 }
 
