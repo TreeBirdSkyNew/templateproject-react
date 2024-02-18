@@ -1,22 +1,22 @@
 
 
-export const TemplateSolutionService = {
+export const TemplateResultService = {
 
-    getAllTemplateSolution: async () => {
-        const response = await fetch('https://localhost:7265/api/TemplateSolution/Index');
+    getAllTemplateResult: async () => {
+        const response = await fetch('https://localhost:7092/api/TemplateResult/Index');
         if (!response.ok) {
             throw new Error('Failed to fetch data');
         }
         return response.json();
     },
 
-    createTemplateSolution: async (templateSolutionVMForCreation) => {
-        const response = await fetch('https://localhost:7265/api/TemplateSolution/Create', {
+    createTemplateResult: async (templateResultVMForCreation) => {
+        const response = await fetch('https://localhost:7092/api/TemplateResult/Create', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(templateSolutionVMForCreation),
+            body: JSON.stringify(templateResultVMForCreation),
           });
           if (!response.ok) {
             throw new Error('Failed to send data');
@@ -24,16 +24,16 @@ export const TemplateSolutionService = {
           return response.json();
     },
 
-    getTemplateSolutionById: async (id) => {
-        const response = await fetch('https://localhost:7265/api/TemplateSolution/SolutionDetails/'+id);
+    getTemplateResultById: async (id) => {
+        const response = await fetch('https://localhost:7092/api/TemplateResult/ResultDetails/'+id);
         if (!response.ok) {
             throw new Error('Failed to fetch data');
         }
         return response.json();
     },
 
-    updateTemplateSolution: async (id,template) => {
-        const response = await fetch('https://localhost:7265/api/TemplateSolution/Edit/'+id, {
+    updateTemplateResult: async (id,template) => {
+        const response = await fetch('https://localhost:7092/api/TemplateResult/Edit/'+id, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -46,8 +46,8 @@ export const TemplateSolutionService = {
           return response.json();
     },
 
-    DeleteTemplateSolution: async (id) => {
-      const response = await fetch('https://localhost:7265/api/TemplateSolution/Delete/'+id, {
+    DeleteTemplateResult: async (id) => {
+      const response = await fetch('https://localhost:7092/api/TemplateResult/Delete/'+id, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

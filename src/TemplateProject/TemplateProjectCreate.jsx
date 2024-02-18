@@ -1,12 +1,15 @@
 import React from 'react';
 import  { TemplateProjectService } from "../Services/TemplateProjectService";
 import  { useState } from 'react';
+import { Editor } from "@tinymce/tinymce-react"
 
 const TemplateProjectCreate = () => {
 
+    const [content,setContent] = useState(null);
+    const [description,setDescription] = useState(null);
+
     const [projectName,setProjectName] = useState('');  
     const [projectTitle,setProjectTitle] = useState(''); 
-    const [projectDescription,setDescription] = useState(''); 
     const [projectVersion,setVersion] = useState(''); 
     const [projectVersionNet,setVersionNet] = useState(''); 
 
@@ -34,7 +37,7 @@ const TemplateProjectCreate = () => {
         var createProject = {
             templateProjectName: projectName,
             templateProjectTitle: projectTitle,
-            templateProjectDescription: projectDescription,
+            templateProjectDescription: content, 
             templateProjectVersion: projectVersion,
             templateProjectVersionNet: projectVersionNet,
         }
@@ -61,11 +64,6 @@ const TemplateProjectCreate = () => {
                             value={projectTitle} onChange={ChangeProjectTitleHandler}/>
                     </div>
                     <div className = "form-group">
-                        <label>TemplateProjectDescription: </label>
-                        <input placeholder="Description" name="Description" className="form-control" 
-                            value={projectDescription} onChange={ChangeProjectDescriptionHandler}/>
-                    </div>
-                    <div className = "form-group">
                         <label>TemplateProjectVersion: </label>
                         <input placeholder="Version" name="Version" className="form-control" 
                             value={projectVersion} onChange={ChangeProjectVersionHandler}/>
@@ -74,6 +72,22 @@ const TemplateProjectCreate = () => {
                         <label>TemplateProjectVersionNet: </label>
                         <input placeholder="VersionNet" name="VersionNet" className="form-control" 
                             value={projectVersionNet} onChange={ChangeProjectVersionNetHandler}/>
+                    </div>
+                    <div>
+                        <Editor apiKey='hz02awppy81e4p1nxz56msqlursgj5kqic9dj7dvnv9j9di5'
+                            onEditorChange={(newvalue,editor) => {
+                                setDescription(newvalue);
+                                setContent(editor.getContent({format : 'text'}));
+                            }}
+                            onInit={(evt,editor ) => {
+                                setContent(editor.getContent({format : 'text'}));
+                            }}
+                            initialValue=''
+                            value={description}
+                            init={{
+                                
+                            }}
+                        />
                     </div>
                     <button className="btn btn-success" onClick={SaveTemplateProject}>Save</button>
                     <button className="btn btn-danger" onClick={Cancel} style={{marginLeft: "10px"}}>Cancel</button>

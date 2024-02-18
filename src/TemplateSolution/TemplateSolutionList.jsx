@@ -21,20 +21,6 @@ const TemplateSolutionList = () => {
         })
     },[]);
 
-    useEffect(() => {
-        TemplateSolutionService.getAllTemplateSolution()
-        .then((res) => {
-            setTemplateSolutions(res);
-        })
-        .catch((error) => {
-            console.log(error);
-        })
-        .finally(() => {
-            return null;
-        })
-      }, []);
-
-
     const handleDeleteSolution = async (templateSolutionId) => {
         TemplateSolutionService.DeleteTemplateSolution(templateSolutionId)
         .then((response) => {
@@ -47,8 +33,6 @@ const TemplateSolutionList = () => {
             return null;
         })
     }
-    
-    
 
     return(
         <div>

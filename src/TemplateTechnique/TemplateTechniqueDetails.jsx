@@ -71,15 +71,6 @@ const TemplateTechniqueDetails = () => {
                            className="form-control" 
                            value={templateTechnique?.templateTechniqueVersionNet} />
                 </div>
-                <div className="row">
-                    <div className="col-md-3">
-                    <strong>templateTechniqueDescription:</strong>
-                    </div>
-                    <textarea placeholder="templateTechniqueDescription" 
-                           name="templateTechniqueDescription" 
-                           className="form-control" 
-                           value={templateTechnique?.templateTechniqueDescription} />
-                </div>
                 <div>
                     <Editor apiKey='hz02awppy81e4p1nxz56msqlursgj5kqic9dj7dvnv9j9di5'
                         onEditorChange={(newvalue,editor) => {

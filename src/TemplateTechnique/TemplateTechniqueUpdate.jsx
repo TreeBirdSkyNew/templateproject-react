@@ -26,8 +26,8 @@ const TemplateTechniqueUpdate = () => {
                 setTemplateTechnique(response);
                 setTechniqueId(response.templateTechniqueId);
                 setProjectId(response.templateProjectId);
-                setTechniqueName(response.templateProjectName);
-                setTechniqueTitle(response.templateProjectTitle);
+                setTechniqueName(response.templateTechniqueName);
+                setTechniqueTitle(response.templateTechniqueTitle);
                 setDescription(response.templateTechniqueDescription);
                 setTechniqueVersion(response.templateTechniqueVersion);
                 setTechniqueVersionNet(response.templateTechniqueVersionNet);
@@ -91,7 +91,7 @@ const TemplateTechniqueUpdate = () => {
                         <input placeholder="templateTechniqueTitle" 
                             name="templateTechniqueTitle" 
                             className="form-control" 
-                            value={templateTechnique?.templateTechniqueTitle} 
+                            value={techniqueTitle} 
                             onChange={changeTemplateTechniqueTitleHandler}/>
                     </div>
                     <div className="row">
@@ -101,7 +101,7 @@ const TemplateTechniqueUpdate = () => {
                         <input placeholder="TemplateTechniqueName" 
                             name="TemplateTechniqueName" 
                             className="form-control" 
-                            value={templateTechnique?.templateTechniqueName} 
+                            value={techniqueName} 
                             onChange={changeTemplateTechniqueNameHandler} />
                     </div>
                     <div className="row">
@@ -111,7 +111,7 @@ const TemplateTechniqueUpdate = () => {
                         <input placeholder="templateTechniqueVersion" 
                             name="templateTechniqueVersion" 
                             className="form-control" 
-                            value={templateTechnique?.templateTechniqueVersion} 
+                            value={techniqueVersion} 
                             onChange={changeTemplateTechniqueVersionHandler} />
                     </div>
                     <div className="row">
@@ -121,7 +121,7 @@ const TemplateTechniqueUpdate = () => {
                         <input placeholder="templateTechniqueVersionNet" 
                             name="templateTechniqueVersionNet" 
                             className="form-control" 
-                            value={templateTechnique?.templateTechniqueVersionNet} 
+                            value={techniqueVersionNet} 
                             onChange={changeTemplateTechniqueVersionNetHandler} />
                     </div>
                     
@@ -129,17 +129,17 @@ const TemplateTechniqueUpdate = () => {
                         <Editor apiKey='hz02awppy81e4p1nxz56msqlursgj5kqic9dj7dvnv9j9di5'
                             onEditorChange={(newvalue,editor) => {
                                 setDescription(newvalue);
-                                setContent(editor.getContent({format : 'html'}));
+                                setContent(editor.getContent({format : 'text'}));
                             }}
                             onInit={(evt,editor ) => {
-                                setContent(editor.getContent({format : 'html'}));
+                                setContent(editor.getContent({format : 'text'}));
                             }}
                             initialValue=''
                             value={description}
                             init={{
                                 
                             }}
-                        />
+                            />
                     </div>
                     <button className="btn btn-success" onClick={SaveTemplateTechnique}>Save</button>
                 </div>

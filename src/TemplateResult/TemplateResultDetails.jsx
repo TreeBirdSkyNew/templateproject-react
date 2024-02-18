@@ -1,27 +1,24 @@
 import React from 'react';
 import  { useState , useEffect} from 'react';
-import {TemplateProjectService} from "../Services/TemplateProjectService";
+import {TemplateResultService} from "../Services/TemplateResultService";
 import { useParams } from 'react-router-dom';
+
 import { Editor } from "@tinymce/tinymce-react"
 
-
-const TemplateProjectDetails = () => {
+const TemplateResultDetails = () => {
 
     const { id } = useParams();
-    const [templateProject,setTemplateProject] = useState(null);
-    
+    const [templateResult,setTemplateResult] = useState(null);
+
     const [content,setContent] = useState(null);
     const [description,setDescription] = useState(null);
+    
 
     useEffect(() => {
-        refreshList(id);
-    },[id]);
-
-    const refreshList = async (templateProjectId) => {
-        TemplateProjectService.getTemplateProjectById(templateProjectId)
+        TemplateResultService.getTemplateResultById(id)
             .then((response) => {
-                setTemplateProject(response);
-                setDescription(response.templateProjectDescription);
+                setTemplateResult(response);
+                setDescription(response.templateResultDescription);
             })
             .catch((error) => {
                 console.log(error);
@@ -29,47 +26,58 @@ const TemplateProjectDetails = () => {
             .finally(() => {
                 return null;
             })
-    };    
-        
+    },[id]);
+
+    
+
     return(
         <div>
-            <h3>TemplateProject</h3>
+            <h3>TemplateResult</h3>
             <div className="card card-body bg-light mb-2 mt-2">
                 <div className="row">
                     <div className="col-md-3">
-                        <strong>templateProjectTitle:</strong>
+                        <strong>templateResultTitle:</strong>
                     </div>
-                    <input placeholder="templateProjectTitle" 
-                           name="templateProjectTitle" 
+                    <input placeholder="templateTechniqueTitle" 
+                           name="templateTechniqueTitle" 
                            className="form-control" 
-                           value={templateProject?.templateProjectTitle} />
+                           value={templateResult?.templateResultTitle} />
                 </div>
                 <div className="row">
                     <div className="col-md-3">
-                        <strong>TemplateProjectName:</strong>
+                        <strong>TemplateResultName:</strong>
                     </div>
-                    <input placeholder="TemplateProjectName" 
-                           name="TemplateProjectName" 
+                    <input placeholder="TemplateResultName" 
+                           name="TemplateResultName" 
                            className="form-control" 
-                           value={templateProject?.templateProjectName} />
+                           value={templateResult?.templateResultName} />
                 </div>
                 <div className="row">
                     <div className="col-md-3">
-                    <strong>templateProjectVersion:</strong>
+                    <strong>templateResultVersion:</strong>
                     </div>
-                    <input placeholder="templateProjectVersion" 
-                           name="templateProjectVersion" 
+                    <input placeholder="templateResultVersion" 
+                           name="templateResultVersion" 
                            className="form-control" 
-                           value={templateProject?.templateProjectVersion} />
+                           value={templateResult?.templateResultVersion} />
                 </div>
                 <div className="row">
                     <div className="col-md-3">
-                    <strong>templateProjectVersionNet:</strong>
+                    <strong>templateResultVersionNet:</strong>
                     </div>
-                    <input placeholder="templateProjectVersionNet" 
-                           name="templateProjectVersionNet" 
+                    <input placeholder="templateResultVersionNet" 
+                           name="templateResultVersionNet" 
                            className="form-control" 
-                           value={templateProject?.templateProjectVersionNet} />
+                           value={templateResult?.templateResultVersionNet} />
+                </div>
+                <div className="row">
+                    <div className="col-md-3">
+                    <strong>templateResultDescription:</strong>
+                    </div>
+                    <textarea placeholder="templateResultDescription" 
+                           name="templateResultDescription" 
+                           className="form-control" 
+                           value={templateResult?.templateResultDescription} />
                 </div>
                 <div>
                     <Editor apiKey='hz02awppy81e4p1nxz56msqlursgj5kqic9dj7dvnv9j9di5'
@@ -78,7 +86,7 @@ const TemplateProjectDetails = () => {
                             setContent(editor.getContent({format : 'text'}));
                         }}
                         onInit={(evt,editor ) => {
-                            setContent(editor.getContent({format : 'text'}));
+
                         }}
                         initialValue=''
                         value={description}
@@ -87,9 +95,11 @@ const TemplateProjectDetails = () => {
                         }}
                         />
                 </div>
+
             </div>
+            
         </div>
     );
 }
 
-export default TemplateProjectDetails;
+export default TemplateResultDetails;

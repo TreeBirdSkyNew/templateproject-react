@@ -1,13 +1,15 @@
 import React from 'react';
 import  { useState } from 'react';
 import  { TemplateSolutionService } from "../Services/TemplateSolutionService";
-
+import { Editor } from "@tinymce/tinymce-react"
 
 const TemplateSolutionCreate = () => {
 
+    const [content,setContent] = useState(null);
+    const [description,setDescription] = useState(null);
+
     const [solutionName,setSolutionName] = useState('');  
     const [solutionTitle,setSolutionTitle] = useState(''); 
-    const [solutionDescription,setSolutionDescription] = useState(''); 
     const [solutionVersion,setSolutionVersion] = useState(''); 
     const [solutionVersionNet,setSolutionVersionNet] = useState(''); 
 
@@ -17,10 +19,6 @@ const TemplateSolutionCreate = () => {
 
     const ChangeSolutionTitleHandler = (event) => {
         setSolutionTitle(event.target.value);
-    }
-
-    const ChangeSolutionDescriptionHandler = (event) => {
-        setSolutionDescription(event.target.value);
     }
 
     const ChangeSolutionVersionHandler = (event) => {
@@ -33,10 +31,9 @@ const TemplateSolutionCreate = () => {
 
     const SaveTemplateSolution = (event) => {
         var createSolution = {
-            templateSolutionId:1,
             templateSolutionName: solutionName,
             templateSolutionTitle: solutionTitle,
-            templateSolutionDescription: solutionDescription,
+            templateSolutionDescription: content, 
             templateSolutionVersion: solutionVersion,
             templateSolutionVersionNet: solutionVersionNet,
         }
@@ -70,11 +67,6 @@ const TemplateSolutionCreate = () => {
                             value={solutionTitle} onChange={ChangeSolutionTitleHandler}/>
                     </div>
                     <div className = "form-group">
-                        <label>TemplateProjectDescription: </label>
-                        <input placeholder="Description" name="Description" className="form-control" 
-                            value={solutionDescription} onChange={ChangeSolutionDescriptionHandler}/>
-                    </div>
-                    <div className = "form-group">
                         <label>TemplateProjectVersion: </label>
                         <input placeholder="Version" name="Version" className="form-control" 
                             value={solutionVersion} onChange={ChangeSolutionVersionHandler}/>
@@ -83,6 +75,22 @@ const TemplateSolutionCreate = () => {
                         <label>TemplateProjectVersionNet: </label>
                         <input placeholder="VersionNet" name="VersionNet" className="form-control" 
                             value={solutionVersionNet} onChange={ChangeSolutionVersionNetHandler}/>
+                    </div>
+                    <div>
+                        <Editor apiKey='hz02awppy81e4p1nxz56msqlursgj5kqic9dj7dvnv9j9di5'
+                            onEditorChange={(newvalue,editor) => {
+                                setDescription(newvalue);
+                                setContent(editor.getContent({format : 'html'}));
+                            }}
+                            onInit={(evt,editor ) => {
+                                setContent(editor.getContent({format : 'html'}));
+                            }}
+                            initialValue=''
+                            value={description}
+                            init={{
+                                
+                            }}
+                        />
                     </div>
                     <button className="btn btn-success" onClick={SaveTemplateSolution}>Save</button>
                     <button className="btn btn-danger" onClick={Cancel} style={{marginLeft: "10px"}}>Cancel</button>
