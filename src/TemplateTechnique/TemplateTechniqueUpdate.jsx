@@ -1,5 +1,6 @@
 import React from 'react';
 import {TemplateTechniqueService} from "../Services/TemplateTechniqueService";
+import { TemplateProjectService } from "../Services/TemplateProjectService";
 import  { useState , useEffect} from 'react';
 import { useParams } from 'react-router-dom';
 import { Editor } from "@tinymce/tinymce-react"
@@ -9,7 +10,7 @@ const TemplateTechniqueUpdate = () => {
     
     const { id } = useParams();
     const [templateTechnique,setTemplateTechnique] = useState(null);
-
+    
     const [content,setContent] = useState(null);
     const [description,setDescription] = useState(null);
 
@@ -40,6 +41,7 @@ const TemplateTechniqueUpdate = () => {
             })
     },[id]);
 
+    
 
     const changeTemplateTechniqueNameHandler = (event) => {
         setTechniqueName(event.target.value);
@@ -57,6 +59,7 @@ const TemplateTechniqueUpdate = () => {
         setTechniqueVersionNet(event.target.value);
     }
 
+    
     const SaveTemplateTechnique = (event) => {
         event.preventDefault();
         let project = {
@@ -129,10 +132,10 @@ const TemplateTechniqueUpdate = () => {
                         <Editor apiKey='hz02awppy81e4p1nxz56msqlursgj5kqic9dj7dvnv9j9di5'
                             onEditorChange={(newvalue,editor) => {
                                 setDescription(newvalue);
-                                setContent(editor.getContent({format : 'text'}));
+                                setContent(editor.getContent({format : 'html'}));
                             }}
                             onInit={(evt,editor ) => {
-                                setContent(editor.getContent({format : 'text'}));
+                                setContent(editor.getContent({format : 'html'}));
                             }}
                             initialValue=''
                             value={description}

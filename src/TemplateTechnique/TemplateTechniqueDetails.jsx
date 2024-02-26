@@ -34,64 +34,57 @@ const TemplateTechniqueDetails = () => {
     return(
         <div>
             <h3>TemplateTechnique</h3>
-            <div className="card card-body bg-light mb-2 mt-2">
                 <div className="row">
-                    <div className="col-md-3">
+                    <div className="col-md-6">
                         <strong>templateTechniqueTitle:</strong>
+                        <input placeholder="templateTechniqueTitle" 
+                            name="templateTechniqueTitle" 
+                            className="form-control" 
+                            value={templateTechnique?.templateTechniqueTitle} />
                     </div>
-                    <input placeholder="templateTechniqueTitle" 
-                           name="templateTechniqueTitle" 
-                           className="form-control" 
-                           value={templateTechnique?.templateTechniqueTitle} />
-                </div>
-                <div className="row">
-                    <div className="col-md-3">
+                    <div className="col-md-6">
                         <strong>TemplateTechniqueName:</strong>
+                        <input placeholder="TemplateTechniqueName" 
+                            name="TemplateTechniqueName" 
+                            className="form-control" 
+                            value={templateTechnique?.templateTechniqueName} />
                     </div>
-                    <input placeholder="TemplateTechniqueName" 
-                           name="TemplateTechniqueName" 
-                           className="form-control" 
-                           value={templateTechnique?.templateTechniqueName} />
                 </div>
                 <div className="row">
-                    <div className="col-md-3">
-                    <strong>templateTechniqueVersion:</strong>
+                    <div className="col-md-6">
+                        <strong>templateTechniqueVersion:</strong>
+                        <input placeholder="templateTechniqueVersion" 
+                            name="templateTechniqueVersion" 
+                            className="form-control" 
+                            value={templateTechnique?.templateTechniqueVersion} />
                     </div>
-                    <input placeholder="templateTechniqueVersion" 
-                           name="templateTechniqueVersion" 
-                           className="form-control" 
-                           value={templateTechnique?.templateTechniqueVersion} />
-                </div>
-                <div className="row">
-                    <div className="col-md-3">
-                    <strong>templateTechniqueVersionNet:</strong>
+                    <div className="col-md-6">
+                        <strong>TemplateTechniqueVersionNet:</strong>
+                        <input placeholder="TemplateTechniqueVersionNet" 
+                            name="TemplateTechniqueVersionNet" 
+                            className="form-control" 
+                            value={templateTechnique?.templateTechniqueVersionNet} />
                     </div>
-                    <input placeholder="templateTechniqueVersionNet" 
-                           name="templateTechniqueVersionNet" 
-                           className="form-control" 
-                           value={templateTechnique?.templateTechniqueVersionNet} />
                 </div>
                 <div>
+                    <TemplateTechniqueItemList templateTechniqueId={id} />
+                </div>
+                <div Style="height: 500px;">
                     <Editor apiKey='hz02awppy81e4p1nxz56msqlursgj5kqic9dj7dvnv9j9di5'
                         onEditorChange={(newvalue,editor) => {
                             setDescription(newvalue);
-                            setContent(editor.getContent({format : 'text'}));
+                            setContent(editor.getContent({format : 'html'}));
                         }}
                         onInit={(evt,editor ) => {
-                            setContent(editor.getContent({format : 'text'}));
+                            setContent(editor.getContent({format : 'html'}));
                         }}
                         initialValue=''
                         value={description}
                         init={{
-                            
+                            height: 1000
                         }}
                         />
                 </div>
-
-            </div>
-            <div>
-                <TemplateTechniqueItemList templateTechniqueId={id} />
-            </div>
         </div>
     );
 }

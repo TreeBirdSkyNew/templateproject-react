@@ -1,12 +1,15 @@
 import React from 'react';
 import  { TemplateTechniqueItemService } from "../Services/TemplateTechniqueItemService";
 import  { useState } from 'react';
+import { Editor } from "@tinymce/tinymce-react"
 
 const TemplateTechniqueItemCreate = () => {
 
+    const [content, setContent] = useState(null);
+    const [description, setDescription] = useState(null);
+   
     const [techniqueItemName,setTechniqueItemName] = useState('');  
     const [techniqueItemTitle,setTechniqueItemTitle] = useState(''); 
-    const [techniqueItemDescription,setTechniqueItemDescription] = useState(''); 
     const [techniqueItemVersion,setTechniqueItemVersion] = useState(''); 
     const [techniqueItemVersionNet,setTechniqueItemVersionNet] = useState(''); 
 
@@ -16,10 +19,6 @@ const TemplateTechniqueItemCreate = () => {
 
     const ChangeTechniqueItemTitleHandler = (event) => {
         setTechniqueItemTitle(event.target.value);
-    }
-
-    const ChangeTechniqueItemDescriptionHandler = (event) => {
-        setTechniqueItemDescription(event.target.value);
     }
 
     const ChangeTechniqueItemVersionHandler = (event) => {
@@ -35,7 +34,7 @@ const TemplateTechniqueItemCreate = () => {
             templateProjectId:1,
             templateTechniqueItemName: techniqueItemName,
             templateTechniqueItemTitle: techniqueItemTitle,
-            templateTechniqueItemDescription: techniqueItemDescription,
+            templateTechniqueItemDescription: content,
             templateTechniqueItemVersion: techniqueItemVersion,
             templateTechniqueItemVersionNet: techniqueItemVersionNet,
         }
@@ -69,11 +68,6 @@ const TemplateTechniqueItemCreate = () => {
                             value={techniqueItemTitle} onChange={ChangeTechniqueItemTitleHandler}/>
                     </div>
                     <div className = "form-group">
-                        <label>TemplateTechniqueItemDescription: </label>
-                        <input placeholder="Description" name="Description" className="form-control" 
-                            value={techniqueItemDescription} onChange={ChangeTechniqueItemDescriptionHandler}/>
-                    </div>
-                    <div className = "form-group">
                         <label>TemplateTechniqueItemVersion: </label>
                         <input placeholder="Version" name="Version" className="form-control" 
                             value={techniqueItemVersion} onChange={ChangeTechniqueItemVersionHandler}/>
@@ -83,6 +77,24 @@ const TemplateTechniqueItemCreate = () => {
                         <input placeholder="VersionNet" name="VersionNet" className="form-control" 
                             value={techniqueItemVersionNet} onChange={ChangeTechniqueItemVersionNetHandler}/>
                     </div>
+                    <div>
+                            <Editor apiKey='hz02awppy81e4p1nxz56msqlursgj5kqic9dj7dvnv9j9di5'
+                                onEditorChange={(newvalue, editor) =>
+                                {
+                                    setDescription(newvalue);
+                                    setContent(editor.getContent({ format: 'html' }));
+                                }}
+                                onInit={(evt, editor) =>
+                                {
+                                    setContent(editor.getContent({ format: 'html' }));
+                                }}
+                                initialValue=''
+                                value={description}
+                                init={{
+
+                                }}
+                            />
+                        </div>
                     <button className="btn btn-success" onClick={SaveTemplateTechniqueItem}>Save</button>
                     <button className="btn btn-danger" onClick={Cancel} style={{marginLeft: "10px"}}>Cancel</button>
                 </form>

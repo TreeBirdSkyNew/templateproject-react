@@ -10,19 +10,7 @@ const TemplateTechniqueList = () => {
     const [templateProjects,setTemplateProjects] = useState([]);
     const [selectedOption, setSelectedOption] = useState('');
    
-    useEffect(() => {
-        TemplateTechniqueService.getAllTemplateTechnique()
-        .then((res) => {
-            setTemplateTechniques(res);
-        })
-        .catch((error) => {
-            console.log(error);
-        })
-        .finally(() => {
-            return null;
-        })
-    },[]);
-
+    
     useEffect(() => {
         TemplateProjectService.getAllTemplateProject()
         .then((res) => {
@@ -35,6 +23,19 @@ const TemplateTechniqueList = () => {
             return null;
         })
       }, []);
+
+      useEffect(() => {
+        TemplateTechniqueService.getAllTemplateTechniqueByProjectId(selectedOption)
+        .then((response) => {
+            setTemplateTechniques(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+        .finally(() => {
+            return null;
+        })
+      }, [selectedOption]);
 
 
     const handleDeleteTechnique = async (templateTechniqueId) => {
@@ -51,28 +52,20 @@ const TemplateTechniqueList = () => {
     }
     
     const handleChange = (event) => {
-        TemplateTechniqueService.getAllTemplateTechniqueByProjectId(event.target.value)
-        .then((response) => {
-            setTemplateTechniques(response);
-        })
-        .catch((error) => {
-            console.log(error);
-        })
-        .finally(() => {
-            return null;
-        })
+        setSelectedOption(event.target.value);
+        
       };
 
     return(
         <div>
             <h3>TemplateTechnique</h3>
             <div>
-            <select value={selectedOption} onChange={handleChange}>
-                <option value="">Choose an option</option>
-                {templateProjects.map(option => (
-                <option key={option.templateProjectId} value={option.templateProjectId}>{option.templateProjectName}</option>
-                ))}
-            </select>
+                <select value={selectedOption} onChange={handleChange}>
+                    <option value="">Choose an option</option>
+                    {templateProjects.map(option => (
+                    <option key={option.templateProjectId} value={option.templateProjectId}>{option.templateProjectName}</option>
+                    ))}
+                </select>
             </div>
             <div className = "row">
                 <Link
@@ -93,14 +86,16 @@ const TemplateTechniqueList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    { templateTechniques.map(project =>
+                {templateTechniques.length !== 0 && (
+                     templateTechniques.map(project =>
                         <tr key={project.templateTechniqueId}>
                             <td>{project.templateTechniqueName}</td>
                             <td><Link to={`/TemplateTechnique-details/${project.templateTechniqueId}`}>Details</Link></td>
                             <td><Link to={`/TemplateTechnique-update/${project.templateTechniqueId}`}>Update</Link></td>
                             <td><button onClick={() => handleDeleteTechnique(project.templateTechniqueId)}>Delete</button></td>
                         </tr>
-                    )}
+                    )
+                )}
                 </tbody>
             </table>  
         </div>

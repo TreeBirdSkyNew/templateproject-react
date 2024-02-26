@@ -83,7 +83,7 @@ const TemplateResultDetails = () => {
                     <Editor apiKey='hz02awppy81e4p1nxz56msqlursgj5kqic9dj7dvnv9j9di5'
                         onEditorChange={(newvalue,editor) => {
                             setDescription(newvalue);
-                            setContent(editor.getContent({format : 'text'}));
+                            setContent(editor.getContent({format : 'html'}));
                         }}
                         onInit={(evt,editor ) => {
 
